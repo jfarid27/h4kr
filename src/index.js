@@ -5,7 +5,8 @@ import Onboard from 'bnc-onboard';
 import Web3 from 'web3';
 import WelcomeMessage from './WelcomeMessage.js';
 import {
-  ConnectDescription
+  ConnectDesc,
+  DisconnectDesc
 } from './Descriptions';
 
 const login = async (state, updateAppState, print) => {
@@ -14,30 +15,36 @@ const login = async (state, updateAppState, print) => {
     networkId: 1,
     subscriptions: {
       wallet: wallet => {
-         const web3 = new Web3(wallet.provider);
-         updateAppState(st => ({ ...st, web3 }))
+        const web3 = new Web3(wallet.provider);
+        updateAppState(st => {
+          st.web3 = web3;
+          st.wallet = wallet;
+          return st;
+        });
       }
     }
   });
-  if (state.web3) {
+
+  if (state.loggedIn) {
     print("AlreadyLoggedInException: You have already logged in. Clear with `disconnect`");
     return;
   }
   try {
     print("Please select a login method.");
-    return
-    // const login = onboard(updateAppState);
-    // await login.walletSelect();
-    // await login.walletCheck();
-    print("LoginException: An error occurred during login.");
-  } catch {
+    await onboard.walletSelect();
+    await onboard.walletCheck();
+    await Promise.resolve();
+    updateAppState(state => {
+      state.loggedIn = true;
+      return state;
+    })
+    print("Login complete!");
+  } catch (err) {
     print("LoginException: An error occurred during login.");
   }
-
 }
 
-
-function App() {
+function Term() {
   const [state, updateAppState] = useState({}); 
   return (<div
       style={{
@@ -54,25 +61,26 @@ function App() {
         startState='maximised'
         style={{ fontWeight: "bold", fontSize: "1em" }}
         commands={{
-          'connect': {
-            method: (args, print, runCommand) => {
-              login(state, updateAppState, print);
-            },
-            options: [
-              {
-                name: 'option',
-                description: 'The Wallet Option you would like. Choose `metamask` or `walletconnect`',
-                defaultValue: 'white',
-              },
-            ],
+          'connect': (args, print, runCommand) => {
+              login(state, updateAppState, print)
+          },
+          'disconnect': (args, print, runCommand) => {
+              updateAppState(state => ({ ...state, loggedIn: false, web3: null, wallet: null }));
+              print("Disconnected!")
           },
         }}
         descriptions={{
-          'connect': ConnectDescription, 
+          'connect': ConnectDesc, 
+          'disconnect': DisconnectDesc, 
         }}
         msg={WelcomeMessage}
       />
     </div>);
+}
+
+
+function App() {
+  return <Term />
 }
 
 const wrapper = document.getElementById("hackmoney-app");

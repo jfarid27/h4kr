@@ -1,3 +1,4 @@
 node_modules
 **.swp
 .openzeppelin
+dist/build

@@ -1,4 +1,4 @@
-const ConnectDescription = `
+const ConnectDesc = `
     Connects to a web3 provider.
   
         connect <Option>
@@ -8,6 +8,11 @@ const ConnectDescription = `
             walletconnect: Connect to walletconnect.
 `;
 
+const DisconnectDesc = `
+    Disconnects from the web3 provider.
+`;
+
 export {
-  ConnectDescription
+  ConnectDesc,
+  DisconnectDesc
 };
