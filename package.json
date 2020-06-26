@@ -8,7 +8,7 @@
     "start": "npx http-server dist -p 80",
     "start:dev-server": "npx http-server dist",
     "start:dev": "npx webpack --watch",
-    "build": "npx webpack"
+    "build": "npx webpack --env.production"
   },
   "author": "J. Farid",
   "license": "GPL-3.0-or-later",
