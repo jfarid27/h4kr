@@ -7,7 +7,7 @@ module.exports = function(env, argv) {
     devtool: env.production ? 'source-maps' : 'eval',
     output: {
       filename: 'main.js',
-      path: path.resolve(__dirname, 'dist/build/'),
+      path: path.resolve(__dirname, 'dist'),
     },
     module: {
       rules: [
