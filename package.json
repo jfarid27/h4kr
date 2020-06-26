@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --exit --recursive",
-    "start": "npx http-server dist",
+    "start": "npx http-server dist -p 80",
+    "start:dev-server": "npx http-server dist",
     "start:dev": "npx webpack --watch",
-    "webpack:build": "npx webpack"
+    "build": "npx webpack"
   },
   "author": "J. Farid",
   "license": "GPL-3.0-or-later",

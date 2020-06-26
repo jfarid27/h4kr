@@ -19,7 +19,10 @@ For general tests, run:
 
 Install dependencies and run `npm run`.
 
-# UI Development
+# Development
 
-Start the dev server with `npm run start:dev`. Note you will have to recompile contracts for new
-ABIs if you wish to capture any Solidity changes.
+1. Start the dev server with `npm run start:dev-server`. Keep this running.
+2. In another window, start the dev webpack watchers with `npm run start:dev`.
+
+Note you will have to recompile contracts for new ABIs if you wish to capture
+any Solidity changes.

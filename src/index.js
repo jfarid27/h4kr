@@ -13,6 +13,12 @@ const login = async (state, updateAppState, print) => {
   const onboard = Onboard({
     dappId: "62745b3f-d523-4532-a52b-1b0d98d20939",
     networkId: 1,
+    walletSelect: {
+      wallets: [
+        { walletName: "metamask", preferred: true },
+        { walletName: 'walletConnect', infuraKey: '59b45ea43eac43f4818fba49e62e82f8' }
+      ]
+    },
     subscriptions: {
       wallet: wallet => {
         const web3 = new Web3(wallet.provider);
