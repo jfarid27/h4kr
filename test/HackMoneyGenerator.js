@@ -24,7 +24,7 @@ describe('HackMoneyGenerator', function () {
 
   describe('initialization', function() {
     beforeEach(async function() {
-      this.rate = await this.contract.getRate();
+      this.rate = await this.contract.rate();
       this.contract_owner = await this.contract.owner();
     });
     it('the deployer is the owner', async function () {
@@ -50,7 +50,7 @@ describe('HackMoneyGenerator', function () {
     });
     it('should pass if done by owner', async function() {
         await this.contract.updateRate(this.val.toString(), { from: owner });
-        const rate = await this.contract.getRate();
+        const rate = await this.contract.rate();
         return expect(rate).to.be.bignumber.equal(this.val);
     });
   });
@@ -73,15 +73,31 @@ describe('HackMoneyGenerator', function () {
           "Returned error: VM Exception while processing transaction: revert ERC777: transfer amount exceeds allowance -- Reason given: ERC777: transfer amount exceeds allowance."
         )
     });
-    it('should pass if contract is approved', async function() {
-        await this.token.balanceOf(user1, { from: user1 });
-        await this.token.approve(this.contract.address, this.burn.toString(), { from: user1 });
-        await this.token.allowance(user1, this.contract.address, { from: user1 });
-        await this.create(user1);
-        const result = await this.token.balanceOf(user1, { from: user1 });
-        const whats_left = (new BN(900)).mul(this.decimals);
-        return expect(result.toString()).to.be.bignumber.equal(whats_left);
-    });
 
+    describe('on success', function() {
+      beforeEach(async function() {
+          await this.token.balanceOf(user1, { from: user1 });
+          await this.token.approve(this.contract.address, this.burn.toString(), { from: user1 });
+          await this.token.allowance(user1, this.contract.address, { from: user1 });
+          await this.create(user1);
+      });
+      it('should pass if contract is approved', async function() {
+          const result = await this.token.balanceOf(user1, { from: user1 });
+          const whats_left = (new BN(900)).mul(this.decimals);
+          return expect(result.toString()).to.be.bignumber.equal(whats_left);
+      });
+      it('should store H4KR tokens in contract', async function() {
+          const result = await this.token.balanceOf(this.contract.address, { from: user1 });
+          const current = (new BN(100)).mul(this.decimals);
+          expect(result.toString()).to.be.bignumber.equal(current);
+      });
+      it('should allow anyone to burn stored tokens', async function() {
+          const result1 = await this.token.balanceOf(this.contract.address, { from: user1 });
+          await this.contract.burn(result1.toString());
+          const result = await this.token.balanceOf(this.contract.address, { from: user1 });
+          const current = (new BN(0)).mul(this.decimals);
+          expect(result.toString()).to.be.bignumber.equal(current);
+      });
+    });
   });
 });
