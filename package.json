@@ -31,10 +31,12 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "bn.js": "^5.1.2",
     "bnc-notify": "^1.2.2",
     "bnc-onboard": "^1.10.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "terminal-in-react": "^4.3.1"
+    "terminal-in-react": "^4.3.1",
+    "web3": "^1.2.9"
   }
 }

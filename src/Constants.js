@@ -1,9 +1,15 @@
-const token_address = '0x761185bed0c7413799aefe021e975b2e61a9c450';
-const generator_address = '';
+const token_address = {
+  mainnet: '0x761185bed0c7413799aefe021e975b2e61a9c450',
+  ropsten: '0x41523eDE082B7903f6BB04A9E57C17f8e0BAa32F'
+};
+const generator_address = {
+  mainnet: '',
+  ropsten: '0x45Dd3f3927B6B229c86156dc433D0F12734FAAdC'
+};
 
 const onboard_settings = {
   dappId: "62745b3f-d523-4532-a52b-1b0d98d20939",
-  networkId: 1,
+  networkId: (env.MODE === 'development') ? 3 : 1,
   walletSelect: {
     wallets: [
       { walletName: "metamask", preferred: true },
@@ -12,8 +18,13 @@ const onboard_settings = {
   }
 };
 
+const current_rate = 100;
+const decimals = '18';
+
 export {
   token_address,
   generator_address,
   onboard_settings,
+  current_rate,
+  decimals
 };

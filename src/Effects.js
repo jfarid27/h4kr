@@ -1,30 +1,32 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { ERC777, Generator } from './ABIs.js';
 import { token_address, generator_address } from './Constants.js';
+import Contract from 'web3-eth-contract';
 
-const buildContracts = (state, updateAppState) => () => {
-  if (!state.web3) return;
-  if (state.contracts && state.contracts.token && state.contracts.generator) return;
-
+export const buildContracts = (state) => {
+  if (!state.web3) return state;
+  if (state.contracts && state.contracts.token && state.contracts.generator) return state;
   const token = new state.web3.eth.Contract(
     ERC777,
-    token_address,
+    (env.MODE == 'development' ? token_address.ropsten : token_address.mainnet),
     {}
   );
 
   const generator = new state.web3.eth.Contract(
     Generator,
-    generator_address,
+    (env.MODE == 'development' ? generator_address.ropsten : generator_address.mainnet),
     {}
   );
 
-  const contracts = { token, generator };
-  updateAppState((st) => ({ ...st, contracts }));
+  state.contracts = { token, generator };
+  return state;
 };
 
-const useEffects = (state, updateAppState) => {
-  useEffect(buildContracts(state, updateAppState), state.web3);
+const UseEffects = (props) => {
+  const {state, updateAppState} = props;
+  useEffect(buildContracts(state, updateAppState), [state.web3]);
+  return <div />
 };
 
-export default useEffects;
+export default UseEffects;

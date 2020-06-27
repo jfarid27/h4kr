@@ -29,13 +29,13 @@ contract HackMoneyGenerator is Ownable {
       base_token.burn(burn_amount, "");
     }
 
-    function createMoney(string memory name, string memory symbol, uint val, uint burn)
+    function createMoney(string memory name, string memory symbol, uint val, uint fee)
       public
       returns (address)
     {
-      require(burn == rate, "Required value not matching rate.");
+      require(fee == rate, "Required value not matching rate.");
       ERC777 money = new HackMoney(name, symbol, msg.sender, val);
-      base_token.transferFrom(msg.sender, address(this), burn);
+      base_token.transferFrom(msg.sender, address(this), fee);
       return address(money);
     }
 }

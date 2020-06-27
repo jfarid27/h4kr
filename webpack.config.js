@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = function(env, argv) {
   const _env = env || {};
@@ -20,6 +21,11 @@ module.exports = function(env, argv) {
           }
         }
       ]
-    }
+    },
+    plugins: [
+      new webpack.DefinePlugin({
+        "env.MODE": _env.production ? '"production"' : '"development"'
+      })
+    ]
   };
 };

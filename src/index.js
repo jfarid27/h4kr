@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import ReactDOM from 'react-dom';
 import Terminal from 'terminal-in-react';
 import Web3 from 'web3';
@@ -16,11 +16,10 @@ import {
   Login,
   MintTokens
 } from './Actions';
-import useEffects from './Effects.js';
 
 function Term() {
   const [state, updateAppState] = useState({}); 
-  useEffects(state, updateAppState);
+  const web3 = state.web3;
   return (<div
       style={{
         display: "flex",
@@ -55,7 +54,7 @@ function Term() {
               print(`Amount: ${amount}`);
               print('Cost: 100 H4KR');
               print('Please approve your spending of 100 H4KR, then approve the token create transaction.');
-              MintTokens(state, updateAppState, print);
+              MintTokens(name, symbol, amount, state, updateAppState, print);
             },
             options: [
               {
