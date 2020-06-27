@@ -1,57 +1,26 @@
 import React, { useState, Component } from 'react';
 import ReactDOM from 'react-dom';
 import Terminal from 'terminal-in-react';
-import Onboard from 'bnc-onboard';
 import Web3 from 'web3';
-import WelcomeMessage from './WelcomeMessage.js';
+import {
+  Welcome,
+  About
+} from './Messages.js';
 import {
   ConnectDesc,
-  DisconnectDesc
+  DisconnectDesc,
+  AboutDesc,
+  MintDesc
 } from './Descriptions';
-
-const login = async (state, updateAppState, print) => {
-  const onboard = Onboard({
-    dappId: "62745b3f-d523-4532-a52b-1b0d98d20939",
-    networkId: 1,
-    walletSelect: {
-      wallets: [
-        { walletName: "metamask", preferred: true },
-        { walletName: 'walletConnect', infuraKey: '59b45ea43eac43f4818fba49e62e82f8' }
-      ]
-    },
-    subscriptions: {
-      wallet: wallet => {
-        const web3 = new Web3(wallet.provider);
-        updateAppState(st => {
-          st.web3 = web3;
-          st.wallet = wallet;
-          return st;
-        });
-      }
-    }
-  });
-
-  if (state.loggedIn) {
-    print("AlreadyLoggedInException: You have already logged in. Clear with `disconnect`");
-    return;
-  }
-  try {
-    print("Please select a login method.");
-    await onboard.walletSelect();
-    await onboard.walletCheck();
-    await Promise.resolve();
-    updateAppState(state => {
-      state.loggedIn = true;
-      return state;
-    })
-    print("Login complete!");
-  } catch (err) {
-    print("LoginException: An error occurred during login.");
-  }
-}
+import {
+  Login,
+  MintTokens
+} from './Actions';
+import useEffects from './Effects.js';
 
 function Term() {
   const [state, updateAppState] = useState({}); 
+  useEffects(state, updateAppState);
   return (<div
       style={{
         display: "flex",
@@ -65,21 +34,62 @@ function Term() {
         backgroundColor='#17061d'
         barColor='#17061d'
         startState='maximised'
+        promptSymbol='$$'
         style={{ fontWeight: "bold", fontSize: "1em" }}
         commands={{
           'connect': (args, print, runCommand) => {
-              login(state, updateAppState, print)
+              Login(state, updateAppState, print);
+          },
+          'mint': {
+            method: (args, print, runCommand) => {
+              if (!state.loggedIn) return print("RequiresLoginException: Please login with `connect` first.");
+              if (!args.name) return print("ArgumentError: Name of token is required.");
+              if (!args.amount) return print("ArgumentError: Amount of tokens to mint is required.");
+              const name = args.name;
+              const amount = Number.parseInt(args.amount);
+              if (Number.isNaN(amount)) return print("ArgmentError: Requires an integer amount of tokens.");
+              if (amount <= 0) return print("ArgmentError: Requires a positive integer amount of tokens.");
+              print("Creating Tokens:");
+              print(`Name: ${name}`);
+              print(`Amount: ${amount}`);
+              print('Cost: 100 H4KR');
+              print('Please approve your spending of 100 H4KR, then approve the token create transaction.');
+              MintTokens(state, updateAppState, print);
+            },
+            options: [
+              {
+                name: 'name',
+                description: 'Name of the ERC token you want to create.',
+              },
+              {
+                name: 'amount',
+                description: 'Amount of tokens you want to create.',
+                defaultValue: '10000000',
+              },
+            ],
           },
           'disconnect': (args, print, runCommand) => {
-              updateAppState(state => ({ ...state, loggedIn: false, web3: null, wallet: null }));
+              updateAppState(state => ({
+                ...state,
+                loggedIn: false,
+                contracts: null,
+                web3: null,
+                wallet: null
+              }));
               print("Disconnected!")
           },
+          'about': (args, print, runCommand) => {
+              print(About)
+          },
+          
         }}
         descriptions={{
-          'connect': ConnectDesc, 
-          'disconnect': DisconnectDesc, 
+          'about': AboutDesc,
+          'mint': MintDesc,
+          'connect': ConnectDesc,
+          'disconnect': DisconnectDesc
         }}
-        msg={WelcomeMessage}
+        msg={Welcome}
       />
     </div>);
 }

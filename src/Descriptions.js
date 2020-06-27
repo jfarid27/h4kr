@@ -1,18 +1,15 @@
-const ConnectDesc = `
-    Connects to a web3 provider.
-  
-        connect <Option>
+const ConnectDesc = 'connects to a web3 provider';
 
-        <Option> -
-            metamask: Connect to Metamask.
-            walletconnect: Connect to walletconnect.
-`;
+const DisconnectDesc = 'disconnects from the web3 provider';
 
-const DisconnectDesc = `
-    Disconnects from the web3 provider.
+const AboutDesc = 'show details about the project';
+const MintDesc = `
+  Mint social tokens.
 `;
 
 export {
   ConnectDesc,
-  DisconnectDesc
+  DisconnectDesc,
+  AboutDesc,
+  MintDesc 
 };

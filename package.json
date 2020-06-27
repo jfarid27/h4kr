@@ -7,7 +7,7 @@
     "test": "mocha --exit --recursive",
     "start": "npx http-server dist -p 80",
     "start:dev-server": "npx http-server dist",
-    "start:dev": "npx webpack --watch",
+    "start:dev": "npx webpack --watch --env.production=false",
     "build": "npx webpack --env.production"
   },
   "author": "J. Farid",
