@@ -34,6 +34,7 @@ function Term() {
         backgroundColor='#17061d'
         barColor='#17061d'
         startState='maximised'
+        watchConsoleLogging
         promptSymbol='$$'
         style={{ fontWeight: "bold", fontSize: "1em" }}
         commands={{
@@ -43,12 +44,12 @@ function Term() {
           'mint': {
             method: (args, print, runCommand) => {
               if (!state.loggedIn) return print("RequiresLoginException: Please login with `connect` first.");
-              if (!args.name) return print("ArgumentError: Name of token is required.");
-              if (!args.amount) return print("ArgumentError: Amount of tokens to mint is required.");
-              const name = args.name;
-              const amount = Number.parseInt(args.amount);
-              if (Number.isNaN(amount)) return print("ArgmentError: Requires an integer amount of tokens.");
-              if (amount <= 0) return print("ArgmentError: Requires a positive integer amount of tokens.");
+              if (!args._.length === 3) return print("ArgumentError: Requires 3 arguments. Type `mint --help` to see more.");
+              const name = args._[0];
+              const symbol = args._[1];
+              const amount = Number.parseInt(args._[2]);
+              if (Number.isNaN(amount)) return print("ArgmentError: Requires an integer amount of tokens. Type `mint --help` to see more.");
+              if (amount <= 0) return print("ArgmentError: Requires a positive integer amount of tokens. Type `mint --help` to see more.");
               print("Creating Tokens:");
               print(`Name: ${name}`);
               print(`Amount: ${amount}`);
@@ -58,13 +59,16 @@ function Term() {
             },
             options: [
               {
-                name: 'name',
-                description: 'Name of the ERC token you want to create.',
+                name: 'token',
+                description: 'Name of the ERC token you want to create (required).',
+              },
+              {
+                name: 'symbol',
+                description: 'Symbol of the ERC token you want to create (required).',
               },
               {
                 name: 'amount',
-                description: 'Amount of tokens you want to create.',
-                defaultValue: '10000000',
+                description: 'Amount of tokens you want to create. Must be an integer greater than zero (required).',
               },
             ],
           },
@@ -81,13 +85,17 @@ function Term() {
           'about': (args, print, runCommand) => {
               print(About)
           },
+          'contact': () => {
+            window.location.href = "mailto:monteluna@protonmail.com?subject=Contact from HackMoney.crypto&body=Hello%20World!"
+          },
           
         }}
         descriptions={{
           'about': AboutDesc,
           'mint': MintDesc,
           'connect': ConnectDesc,
-          'disconnect': DisconnectDesc
+          'disconnect': DisconnectDesc,
+          'contact': 'contact the creator of this app'
         }}
         msg={Welcome}
       />

@@ -22,7 +22,7 @@ $$/      $$/  $$$$$$/  $$/   $$/  $$$$$$$/  $$$$$$$ |
                                            $$    $$/ 
                                             $$$$$$/  
 
-HackMoney.crypto 1.0.0-v7+ #1023
+"You can hack money too!" - HackMoney.crypto 1.0.0-v7+ #1023
 
 The programs included with this system is free software;
 The exact distribution terms for each program are described in the
