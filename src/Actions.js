@@ -27,7 +27,7 @@ const MintTokens = async (name, symb, amount, state, updateAppState, print) => {
       from: state.wallet.provider.selectedAddress,
       gasPrice: `${fastestGas}`
     });
-    const mint_response = await generator.methods.createMoney(
+    return generator.methods.createMoney(
       name,
       symb,
       minting,
@@ -36,9 +36,17 @@ const MintTokens = async (name, symb, amount, state, updateAppState, print) => {
       gas: 3466457,
       from: state.wallet.provider.selectedAddress,
       gasPrice: `${fastestGas}`
+    }).on('transactionHash', hash => {
+      print("Your deployment is complete!");
+      print("Check the transaction hash below in EtherScan to see confirmation.");
+      print(`Check your wallet for your new tokens with the symbol ${symb}.`);
+      print(`   Transaction Hash: ${hash}`);
+    }).on('error', err => {
+      print('Something went wrong. Please try again. If the problem continues, type `contact` and send the error log below.'); 
+      console.log(err);
     });
   } catch (err) {
-    print("Exception: An error has occurred. Please see below");
+    print('Something went wrong. Please try again. If the problem continues, type `contact` and send the error log below.'); 
     console.log(err)
   }
 };

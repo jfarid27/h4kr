@@ -50,26 +50,17 @@ function Term() {
               if (Number.isNaN(amount)) return print("ArgmentError: Requires an integer amount of tokens. Type `mint --help` to see more.");
               if (amount <= 0) return print("ArgmentError: Requires a positive integer amount of tokens. Type `mint --help` to see more.");
               print("Creating Tokens:");
-              print(`Name: ${name}`);
-              print(`Amount: ${amount}`);
-              print('Cost: 100 H4KR');
+              print(`   Name: ${name}`);
+              print(`   Amount: ${amount}`);
+              print('   Cost: 100 H4KR');
+              print(' ');
+              print(' ');
+              print('WARNING: Confirm gas prices in your transaction. This tool is not responsible for lost funds!');
+              print(' ');
+              print(' ');
               print('Please approve your spending of 100 H4KR, then approve the token create transaction.');
               MintTokens(name, symbol, amount, state, updateAppState, print);
             },
-            options: [
-              {
-                name: 'token',
-                description: 'Name of the ERC token you want to create (required).',
-              },
-              {
-                name: 'symbol',
-                description: 'Symbol of the ERC token you want to create (required).',
-              },
-              {
-                name: 'amount',
-                description: 'Amount of tokens you want to create. Must be an integer greater than zero (required).',
-              },
-            ],
           },
           'disconnect': (args, print, runCommand) => {
               updateAppState(state => ({
