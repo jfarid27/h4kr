@@ -3,7 +3,7 @@ const token_address = {
   ropsten: '0x41523eDE082B7903f6BB04A9E57C17f8e0BAa32F'
 };
 const generator_address = {
-  mainnet: '',
+  mainnet: '0x2AD1e986675c621F44A48d8e6DFF017292E784A5',
   ropsten: '0x45Dd3f3927B6B229c86156dc433D0F12734FAAdC'
 };
 

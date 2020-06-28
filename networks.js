@@ -1,5 +1,7 @@
 const { projectId, mnemonic } = require('./.secrets.json');
 const HDWalletProvider = require('@truffle/hdwallet-provider');
+const Web3 = require("web3");
+const web3 = new Web3();
 
 module.exports = {
   networks: {
@@ -17,6 +19,13 @@ module.exports = {
       ),
       networkId: 3,
       gasPrice: 10e9
+    },
+    mainnet: {
+      provider: () => new HDWalletProvider(
+        mnemonic, `https://mainnet.infura.io/v3/${projectId}`
+      ),
+      networkId: 1,
+      gasPrice: web3.utils.toWei('30', 'gwei')
     }
   },
 };
