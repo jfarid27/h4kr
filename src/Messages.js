@@ -33,11 +33,22 @@ permitted by applicable law.
 
 Questions? Contact: monteluna@protonmail.com
 
+Welcome
 =========================
 
-Welcome! This is HackingMoney.crypto. A site for people to create digital
+This is HackingMoney.crypto. A site for people to create digital
 social money on Ethereum. Please have Metamask or a WalletConnect enabled
 application. Have fun!!
+
+Quickstart
+=========================
+
+1. First connect your wallet by typing "connect".
+2. Next, mint 1M MyToken with symbol "MTK" by typing "mint MyToken MTK 1000000"
+3. Approve the 2 transactions. You're done!
+
+Help
+=========================
 
 Type "help" to see a list of available commands.
 `;
