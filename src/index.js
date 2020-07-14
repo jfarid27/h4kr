@@ -104,9 +104,14 @@ const UserSelectors = ({ state, dispatch }) => (
            { touched.tokenamount && errors.tokenamount && <p className="text-danger">{errors.tokenamount}</p> }
          </div> : "" }
           { values.action === createERC ?
-            <Button type="submit" variant="primary" block disabled={isSubmitting}>
-              Submit
-            </Button>
+            <div>
+              <Button type="submit" variant="primary" block disabled={isSubmitting}>
+                Create (Cost: 100 H4KR)
+              </Button>
+              <Button variant="secondary" block onClick={() => window.open('https://app.uniswap.org/#/swap?outputCurrency=0x761185bEd0c7413799AEFe021E975B2E61A9c450', '_blank')}>
+                Buy H4KR
+              </Button>
+            </div>
             : ""
           }
        </Form>
