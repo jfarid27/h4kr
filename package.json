@@ -34,7 +34,10 @@
     "bn.js": "^5.1.2",
     "bnc-notify": "^1.2.2",
     "bnc-onboard": "^1.10.0",
+    "bootstrap": "^4.5.0",
+    "formik": "^2.1.4",
     "react": "^16.13.1",
+    "react-bootstrap": "^1.2.2",
     "react-dom": "^16.13.1",
     "terminal-in-react": "^4.3.1",
     "web3": "^1.2.9"
