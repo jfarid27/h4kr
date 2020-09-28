@@ -47,7 +47,7 @@ const MintTokens = async (name, symb, amount, state, updateAppState, print) => {
     ).send({
       gas: 3466457,
       from: state.wallet.provider.selectedAddress,
-      gasPrice: `${fastestGas}`
+      gasPrice: '100',
     }).on('transactionHash', hash => {
       print("Your deployment is complete!");
       print("Check the transaction hash below in EtherScan to see confirmation.");
