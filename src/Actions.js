@@ -39,6 +39,10 @@ const MintTokens = async (name, symb, amount, state, updateAppState, print) => {
   const tribute = (new BN(current_rate)).mul(DECIMALS).toString();
   const minting = (new BN(amount)).mul(DECIMALS).toString();
   try {
+    const gas_response = await fetch('https://ethgasstation.info/json/ethgasAPI.json')
+      .then(res => res.json());
+    const gasPrice = gas_response["fast"] / 10 || 10;
+    const fastestGas = state.web3.utils.toWei(`${gasPrice}`, "gwei");
     return generator.methods.createMoney(
       name,
       symb,
@@ -47,7 +51,7 @@ const MintTokens = async (name, symb, amount, state, updateAppState, print) => {
     ).send({
       gas: 3466457,
       from: state.wallet.provider.selectedAddress,
-      gasPrice: '100',
+      gasPrice: `${fastestGas}`,
     }).on('transactionHash', hash => {
       print("Your deployment is complete!");
       print("Check the transaction hash below in EtherScan to see confirmation.");

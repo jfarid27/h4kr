@@ -9,7 +9,7 @@ const generator_address = {
 
 const onboard_settings = {
   dappId: "62745b3f-d523-4532-a52b-1b0d98d20939",
-  networkId: (env.MODE === 'development') ? 3 : 1,
+  networkId: 1,
   walletSelect: {
     wallets: [
       { walletName: "metamask", preferred: true },

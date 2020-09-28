@@ -28,7 +28,7 @@ const createERC = "createERC";
 const submitNewTokenReady = (values) => {
   if (values.action === createERC) {
     if (!values.tokenname || values.tokenname === '') return;
-    if (!values.tokensymb || values.tokensymb === '') return;
+    if (!values.tokensymbol || values.tokensymbol === '') return;
     if (!values.tokenamount || values.tokenamount <= 0) return;
     return true;
   }
@@ -37,12 +37,12 @@ const submitNewTokenReady = (values) => {
 const UserSelectors = ({ state, dispatch }) => (
   <div>
     <Formik
-     initialValues={{ action: "", tokenname: "", tokensymb: "", tokenamount: 0 }}
+     initialValues={{ action: "", tokenname: "", tokensymbol: "", tokenamount: 0 }}
      validate={values => {
           const errors = {};
           if (values.action === createERC) {
             if (!values.tokenname || values.tokenname === '') { errors.tokenname = "Name error. Cannot be blank" };
-            if (!values.tokensymb || values.tokensymb === '') { errors.tokensymb = "Symbol error. Cannot be blank" };
+            if (!values.tokensymbol || values.tokensymbol === '') { errors.tokensymbol = "Symbol error. Cannot be blank" };
             if (!values.tokenamount || values.tokenamount <= 0) { errors.tokenamount = "Amount error. Cannot be less than zero." };
           }
          return errors;
@@ -86,13 +86,13 @@ const UserSelectors = ({ state, dispatch }) => (
            { touched.tokenname && errors.tokenname && <p className="text-danger">{errors.tokenname}</p> }
          </div> : "" }
          { values.action === createERC ? <div className="form-group">
-           <label htmlFor="tokensymb">The token symbol will be </label>
-           <input className="ml-2" name="tokensymb" type="text" placeholder="MTK"
+           <label htmlFor="tokensymbol">The token symbol will be </label>
+           <input className="ml-2" name="tokensymbol" type="text" placeholder="MTK"
              onChange={handleChange}
              onBlur={handleBlur}
-             value={values.tokensymb}
+             value={values.tokensymbol}
            />
-           { touched.tokensymb && errors.tokensymb && <p className="text-danger">{errors.tokensymb}</p> }
+           { touched.tokensymbol && errors.tokensymbol && <p className="text-danger">{errors.tokensymbol}</p> }
          </div> : "" }
          { values.action === createERC ? <div className="form-group">
            <label htmlFor="tokenamount">The amount that should be minted will be </label>
