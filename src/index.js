@@ -78,7 +78,7 @@ const UserSelectors = ({ state, dispatch }) => (
          </div>
          { values.action === createERC ? <div className="form-group">
            <label htmlFor="tokenname">The token name will be </label>
-           <input className="ml-2" name="tokenname" type="text" placeholder="Mytoken" 
+           <input className="ml-2" name="tokenname" type="text" placeholder="Mytoken"
              onChange={handleChange}
              onBlur={handleBlur}
              value={values.tokenname}
@@ -86,7 +86,7 @@ const UserSelectors = ({ state, dispatch }) => (
            { touched.tokenname && errors.tokenname && <p className="text-danger">{errors.tokenname}</p> }
          </div> : "" }
          { values.action === createERC ? <div className="form-group">
-           <label htmlFor="tokensymb">The token name will be </label>
+           <label htmlFor="tokensymb">The token symbol will be </label>
            <input className="ml-2" name="tokensymb" type="text" placeholder="MTK"
              onChange={handleChange}
              onBlur={handleBlur}
@@ -108,6 +108,9 @@ const UserSelectors = ({ state, dispatch }) => (
               <Button type="submit" variant="primary" block disabled={isSubmitting}>
                 Create (Cost: 100 H4KR)
               </Button>
+              <Button type="submit" variant="primary" block disabled={isSubmitting} onClick={() => ApproveH4KR(state)}>
+                Approve
+              </Button>
               <Button variant="secondary" block onClick={() => window.open('https://app.uniswap.org/#/swap?outputCurrency=0x761185bEd0c7413799AEFe021E975B2E61A9c450', '_blank')}>
                 Buy H4KR
               </Button>
@@ -121,7 +124,7 @@ const UserSelectors = ({ state, dispatch }) => (
 );
 
 const printer = updateAppState => message => {
-    updateAppState(state => ( { ...state, message } )); 
+    updateAppState(state => ( { ...state, message } ));
 };
 
 const SelectorComponent = ({ state, dispatch }) => {
@@ -146,7 +149,7 @@ const ConnectPromptComponent = ({ state, dispatch }) => {
         <Col xs={6}>
           { (!loggedIn) ?
             <Button variant="primary" onClick={() => Login(state, dispatch, printer(dispatch)) }>{"Connect"}</Button>
-            : 
+            :
             <span>
             <Button variant="primary" onClick={() => dispatch(st => ({ ...st, loggedIn: false })) }>{"Logout"}</Button>
             </span> }

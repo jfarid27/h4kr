@@ -12,7 +12,7 @@ import Web3 from 'web3';
 
 const DECIMALS = (new BN("10")).pow(new BN(decimals));
 
-const MintTokens = async (name, symb, amount, state, updateAppState, print) => {
+const ApproveH4KR = async (state) => {
   if (!state.web3 || !state.loggedIn) return;
   const { generator, token } = state.contracts;
   const tribute = (new BN(current_rate)).mul(DECIMALS).toString();
@@ -27,6 +27,18 @@ const MintTokens = async (name, symb, amount, state, updateAppState, print) => {
       from: state.wallet.provider.selectedAddress,
       gasPrice: `${fastestGas}`
     });
+  } catch (err) {
+    print('Something went wrong. Please try again. If the problem continues, type `contact` and send the error log below.');
+    console.log(err)
+  }
+}
+
+const MintTokens = async (name, symb, amount, state, updateAppState, print) => {
+  if (!state.web3 || !state.loggedIn) return;
+  const { generator, token } = state.contracts;
+  const tribute = (new BN(current_rate)).mul(DECIMALS).toString();
+  const minting = (new BN(amount)).mul(DECIMALS).toString();
+  try {
     return generator.methods.createMoney(
       name,
       symb,
@@ -42,11 +54,11 @@ const MintTokens = async (name, symb, amount, state, updateAppState, print) => {
       print(`Check your wallet for your new tokens with the symbol ${symb}.`);
       print(`   Transaction Hash: ${hash}`);
     }).on('error', err => {
-      print('Something went wrong. Please try again. If the problem continues, type `contact` and send the error log below.'); 
+      print('Something went wrong. Please try again. If the problem continues, type `contact` and send the error log below.');
       console.log(err);
     });
   } catch (err) {
-    print('Something went wrong. Please try again. If the problem continues, type `contact` and send the error log below.'); 
+    print('Something went wrong. Please try again. If the problem continues, type `contact` and send the error log below.');
     console.log(err)
   }
 };
