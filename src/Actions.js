@@ -16,7 +16,6 @@ const ApproveH4KR = async (state) => {
   if (!state.web3 || !state.loggedIn) return;
   const { generator, token } = state.contracts;
   const tribute = (new BN(current_rate)).mul(DECIMALS).toString();
-  const minting = (new BN(amount)).mul(DECIMALS).toString();
   try {
     const gas_response = await fetch('https://ethgasstation.info/json/ethgasAPI.json')
       .then(res => res.json());
@@ -104,5 +103,6 @@ const Login = async (state, updateAppState, print) => {
 
 export {
   Login,
-  MintTokens
+  MintTokens,
+  ApproveH4KR
 };

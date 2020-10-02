@@ -20,7 +20,8 @@ import {
 } from './Descriptions';
 import {
   Login,
-  MintTokens
+  MintTokens,
+  ApproveH4KR
 } from './Actions';
 
 const createERC = "createERC";
