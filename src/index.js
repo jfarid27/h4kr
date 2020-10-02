@@ -108,7 +108,7 @@ const UserSelectors = ({ state, dispatch }) => (
               <Button type="submit" variant="primary" block disabled={isSubmitting}>
                 Create (Cost: 100 H4KR)
               </Button>
-              <Button type="submit" variant="primary" block disabled={isSubmitting} onClick={() => ApproveH4KR(state)}>
+              <Button variant="primary" block disabled={isSubmitting} onClick={() => ApproveH4KR(state)}>
                 Approve
               </Button>
               <Button variant="secondary" block onClick={() => window.open('https://app.uniswap.org/#/swap?outputCurrency=0x761185bEd0c7413799AEFe021E975B2E61A9c450', '_blank')}>
