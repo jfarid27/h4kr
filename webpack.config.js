@@ -10,6 +10,7 @@ module.exports = function(env, argv) {
     output: {
       filename: 'main.js',
       path: path.resolve(__dirname, 'dist/build'),
+      publicPath: 'dist/build'
     },
     module: {
       rules: [
