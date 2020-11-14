@@ -9,7 +9,7 @@ module.exports = function(env, argv) {
     devtool: _env.production ? 'source-maps' : 'eval',
     output: {
       filename: 'main.js',
-      path: path.resolve(__dirname, 'dist'),
+      path: path.resolve(__dirname, 'dist/build'),
     },
     module: {
       rules: [

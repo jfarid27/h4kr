@@ -1,0 +1,8 @@
+tasks:
+  - init: npm install && npm run build
+  - command: npm run start:dev
+  - command: npm run start:dev-server
+
+ports:
+  - port: 8080
+    onOpen: open-preview
