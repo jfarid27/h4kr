@@ -1,4 +1,4 @@
-# HackingMoney.Crypto
+# HackingMoney.Crypto [![Build Status](https://travis-ci.org/jfarid27/h4kr.svg?branch=master)](https://travis-ci.org/jfarid27/h4kr)
 ---
 
 This is the source code for [HackingMoney.Crypto](https://hackmoney-crypto.herokuapp.com/). Feel free to share and contribute.
